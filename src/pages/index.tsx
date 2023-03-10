@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <div className="home min-h-screen flex flex-col items-center justify-center">
-      <div className="w-full text-right">
+      <div className="w-full text-center">
         <div className="py-6 px-3">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-md uppercase font-bold px-8 py-2 rounded-md sm:mr-2 mb-1 ease-linear transition-all duration-150"
