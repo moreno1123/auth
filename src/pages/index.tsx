@@ -5,7 +5,7 @@ export default function Home() {
   const { data: session } = useSession();
 
   return (
-    <div className="home min-h-screen flex items-center justify-center">
+    <div className="home min-h-screen flex flex-col items-center justify-center">
       <div className="w-full text-right">
         <div className="py-6 px-3">
           <button
