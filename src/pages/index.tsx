@@ -25,7 +25,7 @@ export default function Home() {
       </div>
       <div className="text-center mt-12">
         <h3 className="text-4xl font-semibold mb-2">
-          User name: {session?.user?.name}
+          User name:&nbsp;{session?.user?.name}
         </h3>
         <div className="text-sm mb-2 font-bold">
           User email: {session?.user?.email}
