@@ -1,7 +1,6 @@
 import NextAuth, { Account, Profile, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 import { JWT } from "next-auth/jwt";
@@ -9,6 +8,7 @@ import { Adapter, AdapterUser } from "next-auth/adapters";
 import connectDb from "@/utils/connectDb";
 import UserModal from "@/models/User";
 import bcrypt from "bcryptjs";
+
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   providers: [

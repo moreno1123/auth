@@ -63,7 +63,7 @@ export default async function sendMail(
   await new Promise((resolve, reject) => {
     transporter.sendMail(options, (err, info) => {
       if (err) {
-        console.error(err);
+        console.log(err);
         reject(err);
       } else {
         console.log(info);

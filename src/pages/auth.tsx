@@ -62,7 +62,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
 
   const csrfToken = await getCsrfToken(ctx);
   const providers = await getProviders();
-  console.log(providers)
+
   return {
     props: {
       providers: Object.values(providers!),
