@@ -179,7 +179,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             {...register("accept")}
           />
           <label htmlFor="accept" className="text-gray-700">
-            I accept the&nbsp;{" "}
+            I accept the&nbsp;
             <a
               href=""
               className="text-blue-600 hover:text-blue-700 hover:underline"
