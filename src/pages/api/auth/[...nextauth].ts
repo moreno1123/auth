@@ -28,7 +28,7 @@ export default NextAuth({
         await connectDb();
         const user = await UserModal.findOne({ email: credentials!.email });
         if (!user) {
-          throw new Error("Something went wrong.");
+          throw new Error("Email or password is not correct.");
         }
         if (user.emailVerified == false) {
           throw new Error("Please verify email before sign in.");
