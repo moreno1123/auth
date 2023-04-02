@@ -20,6 +20,7 @@ async function connectDb() {
   if (cached.conn) {
     return cached.conn;
   }
+
   if (!cached.promise) {
     const options = {
       bufferCommands: false,
@@ -36,8 +37,10 @@ async function connectDb() {
         console.log(error as Error);
       });
   }
+
   cached.conn = await cached.promise;
 
   return cached.conn;
+  
 }
 export default connectDb;

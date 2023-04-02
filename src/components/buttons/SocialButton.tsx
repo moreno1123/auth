@@ -1,7 +1,6 @@
 import { signIn } from "next-auth/react";
 import * as React from "react";
 import { FaGoogle } from "react-icons/fa";
-import { SiAuth0 } from "react-icons/si";
 
 interface ISocialButtonProps {
   id: string;
@@ -10,6 +9,7 @@ interface ISocialButtonProps {
 }
 
 const SocialButton: React.FunctionComponent<ISocialButtonProps> = (props) => {
+  
   const { id, text, csrfToken } = props;
 
   return (

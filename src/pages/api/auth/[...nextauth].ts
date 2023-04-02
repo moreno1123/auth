@@ -25,21 +25,28 @@ export default NextAuth({
         },
       },
       async authorize(credentials) {
+
         await connectDb();
+
         const user = await UserModal.findOne({ email: credentials!.email });
+
         if (!user) {
           throw new Error("Email or password is not correct.");
         }
+
         if (user.emailVerified == false) {
           throw new Error("Please verify email before sign in.");
         }
+
         const isPasswordCorrect = await bcrypt.compare(
           credentials!.password,
           user.password
         );
+
         if (!isPasswordCorrect) {
           throw new Error("Email or password is not correct.");
         }
+
         return user;
       },
     }),
@@ -69,15 +76,19 @@ export default NextAuth({
       profile?: Profile | undefined;
       isNewUser?: boolean | undefined;
     }) {
+
       if (user) {
         token.provider = account?.provider;
       }
+
       return token;
     },
     async session({ session, token }: { session: any; token: JWT }) {
+
       if (session.user) {
         session.user.provider = token.provider;
       }
+      
       return session;
     },
   },

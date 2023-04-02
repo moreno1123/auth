@@ -10,10 +10,12 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+
 interface ILoginFormProps {
   callbackUrl: string;
   csrfToken: string;
 }
+
 const FormSchema = z.object({
   email: z.string().email("Please enter a valid email adress."),
   password: z
@@ -23,10 +25,14 @@ const FormSchema = z.object({
 });
 
 type FormSchemaType = z.infer<typeof FormSchema>;
+
 const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
+
   const { callbackUrl, csrfToken } = props;
+
   const router = useRouter();
   const path = router.pathname;
+
   const {
     register,
     handleSubmit,
@@ -34,18 +40,22 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
   } = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
   });
+
   const onSubmit: SubmitHandler<FormSchemaType> = async (values) => {
+
     const res: any = await signIn("credentials", {
       redirect: false,
       email: values.email,
       password: values.password,
       callbackUrl,
     });
+
     if (res.error) {
       return toast.error(res.error);
     } else {
       return router.push("/");
     }
+
   };
 
   return (
@@ -53,6 +63,7 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
       <h2 className="text-center text-2xl font-bold tracking-wide text-gray-800">
         Sign in
       </h2>
+
       <p className="text-center text-sm text-gray-600 mt-2">
         You do not have an account?&nbsp;
         <a
@@ -69,13 +80,16 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
           Sign up
         </a>
       </p>
+
       <form
         method="post"
         action="/api/auth/signin/email"
         className="my-8 text-sm"
         onSubmit={handleSubmit(onSubmit)}
       >
+
         <input type="hidden" name="csrfToken" defaultValue={csrfToken} />
+
         <Input
           name="email"
           label="Email address"
@@ -97,11 +111,13 @@ const LoginForm: React.FunctionComponent<ILoginFormProps> = (props) => {
           error={errors?.password?.message}
           disabled={isSubmitting}
         />
+
         <div className="mt-2 hover:underline w-fit">
           <Link href="/forgot" className=" text-blue-600">
             Forgot password?
           </Link>
         </div>
+        
         <SlideButton
           type="submit"
           text="Sign in"

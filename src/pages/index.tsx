@@ -16,6 +16,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+
       <div className="w-full flex justify-center">
         <img
           src={session?.user?.image!}
@@ -23,10 +24,12 @@ export default function Home() {
           className="rounded-full h-40 w-40"
         />
       </div>
+
       <div className="text-center mt-12">
         <h3 className="text-4xl font-semibold mb-2">
           User name:&nbsp;{session?.user?.name} sadfasdfasdfasdf
         </h3>
+
         <div className="text-sm mb-2 font-bold">
           User email: {session?.user?.email}
         </div>
@@ -36,7 +39,9 @@ export default function Home() {
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
+
   const session = await getSession(ctx);
+  
   return {
     props: {
       session,

@@ -11,11 +11,12 @@ import { toast } from "react-toastify";
 import { SubmitHandler } from "react-hook-form/dist/types/form";
 import axios from "axios";
 import Link from "next/link";
+
 interface IResetFormProps {
   token: string;
 }
-const FormSchema = z
-  .object({
+
+const FormSchema = z.object({
     password: z
       .string()
       .min(6, "Password must be atleast 6 characters.")
@@ -26,10 +27,15 @@ const FormSchema = z
     message: "Password doesn't match",
     path: ["confirmPassword"],
   });
+
 type FormSchemaType = z.infer<typeof FormSchema>;
+
 const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
+
   const { token } = props;
+
   const [passwordScore, setPasswordScore] = useState(0);
+
   const {
     register,
     handleSubmit,
@@ -39,7 +45,9 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
   } = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
   });
+
   const onSubmit: SubmitHandler<FormSchemaType> = async (values) => {
+
     try {
       const { data } = await axios.post("/api/auth/reset", {
         password: values.password,
@@ -51,18 +59,22 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
       toast.error(error.response.data.message);
     }
   };
+
   const validatePasswordStrength = () => {
     let password = watch().password;
     return zxcvbn(password ? password : "").score;
   };
+
   useEffect(() => {
     setPasswordScore(validatePasswordStrength());
   }, [watch().password]);
+
   return (
     <div className="w-full px-12 py-4">
       <h2 className="text-center text-2xl font-bold tracking-wide text-gray-800">
         Reset password
       </h2>
+
       <p className="text-center text-sm text-gray-600 mt-2">
         Sign in instead? &nbsp;
         <Link
@@ -72,7 +84,9 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
           Sign in
         </Link>
       </p>
+
       <form className="my-8 text-sm" onSubmit={handleSubmit(onSubmit)}>
+
         <Input
           name="password"
           label="Password"
@@ -83,8 +97,10 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
           error={errors?.password?.message}
           disabled={isSubmitting}
         />
+
         {watch().password?.length > 0 && (
           <div className="flex mt-2">
+
             {Array.from(Array(5).keys()).map((span, i) => (
               <span className="w-1/5 px-1" key={i}>
                 <div
@@ -100,6 +116,7 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
             ))}
           </div>
         )}
+
         <Input
           name="confirmPassword"
           label="Confirm password"
@@ -110,6 +127,7 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
           error={errors?.confirmPassword?.message}
           disabled={isSubmitting}
         />
+
         <SlideButton
           type="submit"
           text="Change password"
@@ -117,6 +135,7 @@ const ResetForm: React.FunctionComponent<IResetFormProps> = (props) => {
           icon={<FiLock />}
           disabled={isSubmitting}
         />
+        
       </form>
     </div>
   );

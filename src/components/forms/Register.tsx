@@ -14,9 +14,11 @@ import { toast } from "react-toastify";
 import { SubmitHandler } from "react-hook-form/dist/types/form";
 import axios from "axios";
 import Link from "next/link";
-interface IRegisterFormProps {}
-const FormSchema = z
-  .object({
+
+interface IRegisterFormProps {
+}
+
+const FormSchema = z.object({
     first_name: z
       .string()
       .min(2, "First name must be atleast 2 characters")
@@ -47,9 +49,13 @@ const FormSchema = z
     message: "Password doesn't match",
     path: ["confirmPassword"],
   });
+
 type FormSchemaType = z.infer<typeof FormSchema>;
+
 const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
+
   const [passwordScore, setPasswordScore] = useState(0);
+
   const {
     register,
     handleSubmit,
@@ -59,29 +65,36 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
   } = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
   });
+
   const onSubmit: SubmitHandler<FormSchemaType> = async (values) => {
     try {
       const { data } = await axios.post("/api/auth/signup", {
         ...values,
       });
+
       reset();
+
       toast.success(data.message);
     } catch (error: any) {
       toast.error(error.response.data.message);
     }
   };
+
   const validatePasswordStrength = () => {
     let password = watch().password;
     return zxcvbn(password ? password : "").score;
   };
+
   useEffect(() => {
     setPasswordScore(validatePasswordStrength());
   }, [watch().password]);
+
   return (
     <div className="w-full px-12 py-4">
       <h2 className="text-center text-2xl font-bold tracking-wide text-gray-800">
         Sign up
       </h2>
+
       <p className="text-center text-sm text-gray-600 mt-2">
         You already have an account?&nbsp;
         <Link
@@ -91,8 +104,11 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           Sign in
         </Link>
       </p>
+
       <form className="my-8 text-sm" onSubmit={handleSubmit(onSubmit)}>
+
         <div className="gap-2 md:flex">
+
           <Input
             name="first_name"
             label="First name"
@@ -103,6 +119,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             error={errors?.first_name?.message}
             disabled={isSubmitting}
           />
+
           <Input
             name="last_name"
             label="Last name"
@@ -113,7 +130,9 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             error={errors?.last_name?.message}
             disabled={isSubmitting}
           />
+
         </div>
+
         <Input
           name="email"
           label="Email address"
@@ -124,6 +143,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           error={errors?.email?.message}
           disabled={isSubmitting}
         />
+
         <Input
           name="phone"
           label="Phone number"
@@ -134,6 +154,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           error={errors?.phone?.message}
           disabled={isSubmitting}
         />
+
         <Input
           name="password"
           label="Password"
@@ -144,8 +165,10 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           error={errors?.password?.message}
           disabled={isSubmitting}
         />
+
         {watch().password?.length > 0 && (
           <div className="flex mt-2">
+
             {Array.from(Array(5).keys()).map((span, i) => (
               <span className="w-1/5 px-1" key={i}>
                 <div
@@ -161,6 +184,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             ))}
           </div>
         )}
+
         <Input
           name="confirmPassword"
           label="Confirm password"
@@ -171,6 +195,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           error={errors?.confirmPassword?.message}
           disabled={isSubmitting}
         />
+
         <div className="flex items-center mt-3">
           <input
             type="checkbox"
@@ -197,6 +222,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             </a>
           </label>
         </div>
+
         <div>
           {errors?.accept && (
             <p className="text-sm text-red-600 mt-1">
@@ -204,6 +230,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
             </p>
           )}
         </div>
+
         <SlideButton
           type="submit"
           text="Sign up"
@@ -211,6 +238,7 @@ const RegisterForm: React.FunctionComponent<IRegisterFormProps> = (props) => {
           icon={<FiLock />}
           disabled={isSubmitting}
         />
+        
       </form>
     </div>
   );

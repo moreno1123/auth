@@ -3,6 +3,7 @@ import ResetForm from "@/components/forms/Reset";
 import { NextPageContext } from "next";
 
 export default function Reset({ token }: { token: string }) {
+
   return (
     <div className="w-full flex items-center justify-center">
       <div className="w-full h-100 flex items-center justify-center">
@@ -16,8 +17,10 @@ export default function Reset({ token }: { token: string }) {
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
+
   const { query } = ctx;
   const token = query.token;
+  
   return {
     props: { token },
   };

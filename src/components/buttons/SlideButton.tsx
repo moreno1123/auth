@@ -9,7 +9,9 @@ interface ISlideButtonProps {
 }
 
 const SlideButton: React.FunctionComponent<ISlideButtonProps> = (props) => {
+
   const { type, text, slide_text, disabled, icon } = props;
+
   return (
     <button
       type={type}
