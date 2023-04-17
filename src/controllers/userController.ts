@@ -16,7 +16,7 @@ export async function getUser(req: NextApiRequest, res:NextApiResponse){
     res.status(200).json({user})
 
   }catch (error){
-    res.status(404).json({erorr: "Something went wrong."})
+    res.status(404).json({error: "Something went wrong."})
   }
 }
 
@@ -44,7 +44,7 @@ export async function updateUser(req: NextApiRequest, res:NextApiResponse){
     res.status(200).json({message: "User updated.", user})
 
   }catch (error){
-    res.status(404).json({erorr: "Something went wrong."})
+    res.status(404).json({error: "Something went wrong."})
   }
 }
 

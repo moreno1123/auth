@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Navigation from '@/components/navigation/Navigation'
 
