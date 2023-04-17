@@ -4,8 +4,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 
 export async function getUser(){
 
-  console.log(`${BASE_URL}/api/user`)
-
   const data = await axios.get(`${BASE_URL}/api/user`)
     .then((res:any) => {
       const data = res.data;
