@@ -15,6 +15,11 @@ export async function middleware(req: NextRequest) {
     if (!session)
       return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/auth`);
   }
+
+  if (pathname.startsWith('/user/')) {
+    if (!session)
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/auth`);
+  }
   
   if (pathname == "/auth") {
     if (session) return NextResponse.redirect(`${origin}`);
