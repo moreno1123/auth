@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 import PageWithIndexLayoutType from '@/types/page'
 import { IndexLayout } from '@/layouts/IndexLayout'
 import Layout from '../userPageLayout'
+import { useUserImageModalStore } from '@/zustand/userImageStore'
+import { FiEdit } from 'react-icons/fi';
+import UserImageModal from '@/components/modals/UserImageModal'
 
 type Props = {}
 
@@ -18,6 +21,8 @@ const formReducer = (state:any, event:any) => {
 }
 
 function AccountPage({}: Props) {
+
+  const toggleOpen = useUserImageModalStore(state => state.toggleOpen)  
 
   const [formData, setFormData] = useReducer(formReducer, {})
 
@@ -57,11 +62,14 @@ function AccountPage({}: Props) {
 
         <div>
           <p className='text-xl font-bold mb-1'>Profile picture</p>
-          <img
-            src={data?.user?.image!}
-            alt={`${data?.user?.name} image`}
-            className="rounded-full h-14 w-14 bg-slate-500 mr-2"
-          />
+          <div className='flex flex-row items-end'>
+            <img
+              src={data?.user?.image!}
+              alt={`${data?.user?.name} image`}
+              className="rounded-full h-14 w-14 bg-slate-500 mr-2"
+            />
+            <button onClick={toggleOpen}><FiEdit size={22}/></button>
+          </div>
         </div>
 
         <form onSubmit={e => handleSubmit(e)} className='flex flex-col gap-2'>
@@ -74,6 +82,13 @@ function AccountPage({}: Props) {
           </div>
         </form>
       </div>
+
+      <UserImageModal 
+      headingText="Change user image"
+      firstButtonText="Cancel"
+      secondButtonText="Submit"
+      params=""
+      />
     </Layout>
   )
 }

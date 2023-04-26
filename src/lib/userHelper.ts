@@ -34,4 +34,19 @@ export async function updateUser(formData:any){
 
 }
 
+export async function updateUserImage(formData:any){
+  const data = await axios.put(`${BASE_URL}/api/user/image`, formData, {
+    headers: {
+    'Content-Type': 'application/json'
+    }  
+  })
+  .then((res:any) => {
+    const data = res.data;
+    return data;
+  }).catch((error:any) => {
+    return error;
+  })
+
+  return data;
+}
 

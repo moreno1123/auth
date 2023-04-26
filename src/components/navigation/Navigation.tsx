@@ -1,12 +1,14 @@
 import React from 'react'
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useQuery } from 'react-query'
+import { getUser } from '@/lib/userHelper'
 
 type Props = {}
 
 export default function Navigation({}: Props) {
 
-  const { data: session } = useSession();
+  const { isLoading, isError, data, error } = useQuery(['user'], getUser)
 
   return (
     <div className="userNavigation w-full">
@@ -20,10 +22,10 @@ export default function Navigation({}: Props) {
           </Link>
         </div>
         <div className='flex flex-row justify-center items-center'>
-          <Link href={`/user/${session?.user?.name}/account`}>
+          <Link href={`/user/${data?.user?.name}/account`}>
             <img
-              src={session?.user?.image!}
-              alt={`${session?.user?.name} image`}
+              src={data?.user?.image!}
+              alt={`${data?.user?.name} image`}
               className="rounded-full h-14 w-14 bg-slate-500 mr-2"
             />
           </Link>
